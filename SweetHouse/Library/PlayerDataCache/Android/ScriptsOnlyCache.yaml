@@ -912,7 +912,7 @@ ScriptsOnlyBuild:
     className: OVRResetOrientation
   - hash:
       serializedVersion: 2
-      Hash: 2e849c6d2568b60c2136281f9dc46d7c
+      Hash: c6b632e2cb1a571181c9b6674afc5a5e
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: BoxPassword
@@ -1188,7 +1188,7 @@ ScriptsOnlyBuild:
     className: PhonePassword
   - hash:
       serializedVersion: 2
-      Hash: 129d56376d3aaf933ca75b2834114d0d
+      Hash: c5283e81fd0f008276d8525eb8060e07
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Pointer
@@ -1801,4 +1801,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: D:/Unity/2020ITShow/SweetHome/SweetHouse/Build/Test.apk
+  playerPath: D:/Unity/2020ITShow/SweetHome_GM/SweetHome/SweetHouse/Build/Test.apk

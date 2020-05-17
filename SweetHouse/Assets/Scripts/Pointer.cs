@@ -11,16 +11,27 @@ public class Pointer : MonoBehaviour
     public LayerMask m_InteractableMask = 0;
     public UnityAction<Vector3, GameObject> OnPointerUpdate = null;
 
-    // 보물상자 비밀번호에 쓰이는 변수들
+    // 보물상자 비밀번호
     public GameObject[] BoxgameObjects = new GameObject[4];
     public GameObject[] BoxgameObjects2 = new GameObject[4];
     public GameObject locker;
     public GameObject BoxPwUI;
     public GameObject chestopen;
-    int cnt = 0;
-    int pw = -1;
-    private int[] boxpw = { 1, 2, 3, 4 };
+    int Boxcnt = 0;
+    int Boxpwcnt = -1;
+    private int[] boxpw = { 0, 3, 1, 3 };
     private int[] boxpw_user = new int[4];
+
+    // 휴대폰 비밀번호
+    public GameObject[] PhonegameObjects = new GameObject[4];
+    public GameObject[] PhonegameObjects2 = new GameObject[4];
+    public GameObject phone;
+    public GameObject PhonePwUI;
+    public GameObject messageimg;
+    int Phonecnt = 0;
+    int Phonepwcnt = -1;
+    private int[] phonepw = { 0, 6, 0, 6 };
+    private int[] phonepw_user = new int[4];
 
     private Transform m_CurrentOrigin = null;
     private GameObject m_CurrentObject = null;
@@ -128,108 +139,221 @@ public class Pointer : MonoBehaviour
         if (!m_CurrentObject)
             return;
 
-        if (m_CurrentObject.name.Equals("locker") && cnt!=2)
+        BoxPassword boxpassword = m_CurrentObject.GetComponent<BoxPassword>();
+
+        if (m_CurrentObject.name.Equals("locker") && Boxcnt!=2)
         {
             BoxPwUI.SetActive(true);
         }
-
         Boxbtninput();
+
+        if (m_CurrentObject.name.Equals("Phone") && Phonecnt != 2)
+        {
+            PhonePwUI.SetActive(true);
+        }
+        Phonebtninput();
     }
-    private void Boxbtninput()
+
+    public void Boxbtninput()
     {
 
-        if (cnt == 0)
+        if (Boxcnt == 0)
         {
             for (int i = 0; i <= 3; ++i)
             {
                 BoxgameObjects2[i].SetActive(false);
-                cnt = 1;
+                Boxcnt = 1;
             }
         }
 
-        if (pw > 3)
+        if (Boxpwcnt > 3)
         {
-            
+
         }
         else
         {
 
             if (m_CurrentObject.name.Equals("boxpwbtn1"))
             {
-                boxpw_user[++pw] = 1;
+                boxpw_user[++Boxpwcnt] = 1;
             }
             else if (m_CurrentObject.name.Equals("boxpwbtn2"))
             {
-                boxpw_user[++pw] = 2;
+                boxpw_user[++Boxpwcnt] = 2;
             }
             else if (m_CurrentObject.name.Equals("boxpwbtn3"))
             {
-                boxpw_user[++pw] = 3;
+                boxpw_user[++Boxpwcnt] = 3;
             }
             else if (m_CurrentObject.name.Equals("boxpwbtn4"))
             {
-                boxpw_user[++pw] = 4;
+                boxpw_user[++Boxpwcnt] = 4;
             }
             else if (m_CurrentObject.name.Equals("boxpwbtn5"))
             {
-                boxpw_user[++pw] = 5;
+                boxpw_user[++Boxpwcnt] = 5;
             }
             else if (m_CurrentObject.name.Equals("boxpwbtn6"))
             {
-                boxpw_user[++pw] = 6;
+                boxpw_user[++Boxpwcnt] = 6;
             }
             else if (m_CurrentObject.name.Equals("boxpwbtn7"))
             {
-                boxpw_user[++pw] = 7;
+                boxpw_user[++Boxpwcnt] = 7;
             }
             else if (m_CurrentObject.name.Equals("boxpwbtn8"))
             {
-                boxpw_user[++pw] = 8;
+                boxpw_user[++Boxpwcnt] = 8;
             }
             else if (m_CurrentObject.name.Equals("boxpwbtn9"))
             {
-                boxpw_user[++pw] = 9;
+                boxpw_user[++Boxpwcnt] = 9;
             }
             else if (m_CurrentObject.name.Equals("boxpwbtn0"))
             {
-                boxpw_user[++pw] = 0;
+                boxpw_user[++Boxpwcnt] = 0;
             }
         }
 
-        if (m_CurrentObject.name.Equals("cancle"))
+        if (m_CurrentObject.name.Equals("boxcancle"))
         {
-            if (pw < 0)
+            if (Boxpwcnt < 0)
             {
-                pw = -1;
+                Boxpwcnt = -1;
             }
             else
             {
-                BoxgameObjects[pw].SetActive(true);
-                BoxgameObjects2[pw].SetActive(false);
-                boxpw_user[pw--] = -1;
+                BoxgameObjects[Boxpwcnt].SetActive(true);
+                BoxgameObjects2[Boxpwcnt].SetActive(false);
+                boxpw_user[Boxpwcnt--] = -1;
             }
         }
 
-        for (int i = 0; i <= pw; ++i)
+        for (int i = 0; i <= Boxpwcnt; ++i)
         {
             BoxgameObjects[i].SetActive(false);
             BoxgameObjects2[i].SetActive(true);
         }
 
-        if (m_CurrentObject.name.Equals("fin_01"))
+        if (m_CurrentObject.name.Equals("boxfin_01"))
         {
-            for(int i = 0; i < 4; ++i)
+            for (int i = 0; i < 4; ++i)
             {
                 if (boxpw[i] != boxpw_user[i])
                 {
                     BoxPwUI.SetActive(false);
-                    cnt = 0;
+                    Boxcnt = 0;
                     return;
                 }
-                chestopen.SetActive(false);
             }
+            chestopen.SetActive(false);
             BoxPwUI.SetActive(false);
-            cnt = 2;
+            Boxcnt = 2;
         }
     }
+
+    public void Phonebtninput()
+    {
+
+        if (Phonecnt == 0)
+        {
+            for (int i = 0; i <= 3; ++i)
+            {
+                PhonegameObjects2[i].SetActive(false);
+                Phonecnt = 1;
+            }
+        }
+
+        if (Phonepwcnt > 3)
+        {
+
+        }
+        else
+        {
+
+            if (m_CurrentObject.name.Equals("phonepwbtn1"))
+            {
+                phonepw_user[++Phonepwcnt] = 1;
+            }
+            else if (m_CurrentObject.name.Equals("phonepwbtn2"))
+            {
+                phonepw_user[++Phonepwcnt] = 2;
+            }
+            else if (m_CurrentObject.name.Equals("phonepwbtn3"))
+            {
+                phonepw_user[++Phonepwcnt] = 3;
+            }
+            else if (m_CurrentObject.name.Equals("phonepwbtn4"))
+            {
+                phonepw_user[++Phonepwcnt] = 4;
+            }
+            else if (m_CurrentObject.name.Equals("phonepwbtn5"))
+            {
+                phonepw_user[++Phonepwcnt] = 5;
+            }
+            else if (m_CurrentObject.name.Equals("phonepwbtn6"))
+            {
+                phonepw_user[++Phonepwcnt] = 6;
+            }
+            else if (m_CurrentObject.name.Equals("phonepwbtn7"))
+            {
+                phonepw_user[++Phonepwcnt] = 7;
+            }
+            else if (m_CurrentObject.name.Equals("phonepwbtn8"))
+            {
+                phonepw_user[++Phonepwcnt] = 8;
+            }
+            else if (m_CurrentObject.name.Equals("phonepwbtn9"))
+            {
+                phonepw_user[++Phonepwcnt] = 9;
+            }
+            else if (m_CurrentObject.name.Equals("phonepwbtn0"))
+            {
+                phonepw_user[++Phonepwcnt] = 0;
+            }
+        }
+
+        if (m_CurrentObject.name.Equals("phonecancle"))
+        {
+            if (Phonepwcnt < 0)
+            {
+                Phonepwcnt = -1;
+            }
+            else
+            {
+                PhonegameObjects[Phonepwcnt].SetActive(true);
+                PhonegameObjects2[Phonepwcnt].SetActive(false);
+                phonepw_user[Phonepwcnt--] = -1;
+            }
+        }
+
+        for (int i = 0; i <= Phonepwcnt; ++i)
+        {
+            PhonegameObjects[i].SetActive(false);
+            PhonegameObjects2[i].SetActive(true);
+        }
+
+        if (m_CurrentObject.name.Equals("phonefin_01"))
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                if (phonepw[i] != phonepw_user[i])
+                {
+                    PhonePwUI.SetActive(false);
+                    Phonecnt = 0;
+                    return;
+                }
+            }
+            messageimg.SetActive(true);
+            PhonePwUI.SetActive(false);
+            Phonecnt = 2;
+        }
+    }
+
+    public GameObject getCurrentObject()
+    {
+        return m_CurrentObject;
+    }
+
+
 }
