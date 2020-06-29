@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Pointer : MonoBehaviour
 {
@@ -32,6 +33,10 @@ public class Pointer : MonoBehaviour
     int Phonepwcnt = -1;
     private int[] phonepw = { 0, 6, 0, 6 };
     private int[] phonepw_user = new int[4];
+    public GameObject phonelight;
+
+    // 탈출
+    private bool enddingKey = false;
 
     private Transform m_CurrentOrigin = null;
     private GameObject m_CurrentObject = null;
@@ -149,9 +154,15 @@ public class Pointer : MonoBehaviour
 
         if (m_CurrentObject.name.Equals("Phone") && Phonecnt != 2)
         {
+            phonelight.SetActive(true);
             PhonePwUI.SetActive(true);
         }
         Phonebtninput();
+
+        if (m_CurrentObject.name.Equals("Enddoor") && enddingKey)
+        {
+            toEndding();
+        }
     }
 
     public void Boxbtninput()
@@ -249,11 +260,14 @@ public class Pointer : MonoBehaviour
             chestopen.SetActive(false);
             BoxPwUI.SetActive(false);
             Boxcnt = 2;
+            enddingKey = true;
         }
     }
 
     public void Phonebtninput()
     {
+
+
 
         if (Phonecnt == 0)
         {
@@ -353,6 +367,11 @@ public class Pointer : MonoBehaviour
     public GameObject getCurrentObject()
     {
         return m_CurrentObject;
+    }
+
+    public void toEndding()
+    {
+        SceneManager.LoadScene("RankingScene");
     }
 
 
